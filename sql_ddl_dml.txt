@@ -1,0 +1,93 @@
+SELECT * FROM `dqlab-boootcamp.data_analytic.titanic_date` LIMIT 1000;
+
+-- membuat tabel baru yang isinya diambil dari tabel titanic_date
+create table `dqlab-boootcamp.data_analytic.titanic_New1` as
+select * from `dqlab-boootcamp.data_analytic.titanic_date`
+where Survived = 1 limit 10;
+-- menampilkan tabel baru
+select * from `dqlab-boootcamp.data_analytic.titanic_New1`;
+-- menghapus tabel
+drop table `dqlab-boootcamp.data_analytic.titanic_New1` ;
+
+-- QUERY SELECT
+SELECT
+  PassengerId,
+  Name,
+  Sex,
+  Age
+FROM `dqlab-boootcamp.data_analytic.titanic_date`;
+
+SELECT * FROM `dqlab-boootcamp.data_analytic.titanic_date`;
+
+-- QUERY SORT
+SELECT * FROM `dqlab-boootcamp.data_analytic.titanic_date`
+WHERE Age IS NOT NULL
+ORDER BY Age ASC;
+
+SELECT * FROM `dqlab-boootcamp.data_analytic.titanic_date`
+WHERE Age IS NOT NULL
+ORDER BY Age DESC;
+
+-- COUNT() FUNCTION
+SELECT Sex, COUNT(*) as COUNT #nama kolom count
+FROM `dqlab-boootcamp.data_analytic.titanic_date`
+GROUP BY Sex;
+
+-- AVG() FUNCTION
+SELECT Sex, AVG(Age) as Avg_age
+FROM `dqlab-boootcamp.data_analytic.titanic_date`
+GROUP BY Sex;
+
+-- MAX() and MIN() FUNCTION
+SELECT Sex, MAX(Age) as Max_age
+FROM `dqlab-boootcamp.data_analytic.titanic_date`
+GROUP BY Sex;
+
+SELECT Sex, MIN(Age) as Min_Age
+FROM `dqlab-boootcamp.data_analytic.titanic_date`
+GROUP BY Sex;
+
+-- SUM() FUNCTION
+SELECT Sex, SUM(Fare) as Sum_fare
+FROM `dqlab-boootcamp.data_analytic.titanic_date`
+GROUP BY Sex;
+
+-- AGGREGATE >1
+SELECT Sex
+, COUNT(*) as Count
+, AVG(Age) as Avg_age
+, MIN(Age) as Min_age
+, MAX(Age) as Max_age
+FROM `dqlab-boootcamp.data_analytic.titanic_date`
+WHERE Age IS NOT NULL
+GROUP BY Sex;
+
+-- menambahkan informasi dari kolom lain (survived)
+select Sex, Survived
+, count(*) as count
+, avg(Age) as avg_age
+, min(Age) as min_age
+, max(Age) as max_age
+from `dqlab-boootcamp.data_analytic.titanic_date`
+where Age is not null
+group by Sex, Survived;
+
+-- Having
+SELECT Sex, Survived
+, COUNT(*) as Count
+, AVG(Age) as Avg_age
+, MIN(Age) as Min_age
+, MAX(Age) as Max_age
+FROM `dqlab-boootcamp.data_analytic.titanic_date`
+WHERE Age IS NOT NULL
+GROUP BY Sex, Survived
+HAVING max_age >70;
+
+select Pclass
+, count(*) as count
+, avg(Age) as avg_age
+, min(Age) as min_age
+, max(Age) as max_age
+from `dqlab-boootcamp.data_analytic.titanic_date`
+group by Pclass
+order by Pclass asc;
